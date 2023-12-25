@@ -7,30 +7,32 @@ import json
 SCOPES = ["https://www.googleapis.com/auth/forms.body",
           "https://www.googleapis.com/auth/drive"]
 SERVICE_ACCOUNT_FILE = '../google-api/account.json'
+FOLDER_ID = ''
+with open('../google-api/folder_id.txt', 'r') as file:
+    for line in file:
+        FOLDER_ID = line.strip()
 
 
-def get_question_id(response):
+def get_question_id(response: dict) -> str:
     question_id = response['replies'][0]['createItem']['questionId'][0]
     return question_id
 
 
-def create_form(week, folder_id='1Nyqd7TeL8OgHtmKDc3kaQKjBgWDT9L2J'):
+def create_form(week: int) -> None:
     credentials = service_account.Credentials.from_service_account_file(
         SERVICE_ACCOUNT_FILE, scopes=SCOPES)
     form_service = build("forms", "v1", credentials=credentials)
     drive_service = build("drive", "v3", credentials=credentials)
     ids = {}
-    NEW_FORM = {
+    new_form = {
         "info": {
             "title": f"Greenwood Picks Pool Week {week}",
         }
     }
-
     names_arr = []
     with open('../blank-points-template.txt', 'r') as f:
         for line in f:
             names_arr.append({"value": line.strip().split('-')[0].rstrip()})
-
     games = {}
     with open(f'../week{week}/week{week}entry.txt', 'r') as f:
         curr_type = ''
@@ -43,8 +45,7 @@ def create_form(week, folder_id='1Nyqd7TeL8OgHtmKDc3kaQKjBgWDT9L2J'):
                     games[curr_type] = [{"value": line}]
                 else:
                     games[curr_type].append({"value": line})
-
-    NAME = {
+    name = {
         "requests": [
             {
                 "createItem": {
@@ -67,8 +68,7 @@ def create_form(week, folder_id='1Nyqd7TeL8OgHtmKDc3kaQKjBgWDT9L2J'):
             }
         ]
     }
-
-    FAVORITE = {
+    favorite = {
         "requests": [
             {
                 "createItem": {
@@ -91,8 +91,7 @@ def create_form(week, folder_id='1Nyqd7TeL8OgHtmKDc3kaQKjBgWDT9L2J'):
             }
         ]
     }
-
-    UNDERDOG = {
+    underdog = {
         "requests": [
             {
                 "createItem": {
@@ -115,8 +114,7 @@ def create_form(week, folder_id='1Nyqd7TeL8OgHtmKDc3kaQKjBgWDT9L2J'):
             }
         ]
     }
-
-    OVER = {
+    over = {
         "requests": [
             {
                 "createItem": {
@@ -140,7 +138,7 @@ def create_form(week, folder_id='1Nyqd7TeL8OgHtmKDc3kaQKjBgWDT9L2J'):
         ]
     }
 
-    UNDER = {
+    under = {
         "requests": [
             {
                 "createItem": {
@@ -164,18 +162,18 @@ def create_form(week, folder_id='1Nyqd7TeL8OgHtmKDc3kaQKjBgWDT9L2J'):
         ]
     }
 
-    result = form_service.forms().create(body=NEW_FORM).execute()
+    result = form_service.forms().create(body=new_form).execute()
 
     question_setting = (
         form_service.forms()
-        .batchUpdate(formId=result["formId"], body=NAME)
+        .batchUpdate(formId=result["formId"], body=name)
         .execute()
     )
     ids[get_question_id(question_setting)] = 'Name'
 
     question_setting = (
         form_service.forms()
-        .batchUpdate(formId=result["formId"], body=FAVORITE)
+        .batchUpdate(formId=result["formId"], body=favorite)
         .execute()
     )
 
@@ -183,7 +181,7 @@ def create_form(week, folder_id='1Nyqd7TeL8OgHtmKDc3kaQKjBgWDT9L2J'):
 
     question_setting = (
         form_service.forms()
-        .batchUpdate(formId=result["formId"], body=UNDERDOG)
+        .batchUpdate(formId=result["formId"], body=underdog)
         .execute()
     )
 
@@ -191,7 +189,7 @@ def create_form(week, folder_id='1Nyqd7TeL8OgHtmKDc3kaQKjBgWDT9L2J'):
 
     question_setting = (
         form_service.forms()
-        .batchUpdate(formId=result["formId"], body=OVER)
+        .batchUpdate(formId=result["formId"], body=over)
         .execute()
     )
 
@@ -199,7 +197,7 @@ def create_form(week, folder_id='1Nyqd7TeL8OgHtmKDc3kaQKjBgWDT9L2J'):
 
     question_setting = (
         form_service.forms()
-        .batchUpdate(formId=result["formId"], body=UNDER)
+        .batchUpdate(formId=result["formId"], body=under)
         .execute()
     )
 
@@ -213,9 +211,9 @@ def create_form(week, folder_id='1Nyqd7TeL8OgHtmKDc3kaQKjBgWDT9L2J'):
         fileId=form_id, fields='id, parents').execute()
     previous_parents = ",".join(form_file.get('parents'))
 
-    file = drive_service.files().update(
+    drive_service.files().update(
         fileId=form_id,
-        addParents=folder_id,
+        addParents=FOLDER_ID,
         removeParents=previous_parents,
         fields='id, parents'
     ).execute()
@@ -228,7 +226,7 @@ def create_form(week, folder_id='1Nyqd7TeL8OgHtmKDc3kaQKjBgWDT9L2J'):
         print("Done!")
 
 
-def get_responses(week):
+def get_responses(week: int) -> list:
     credentials = service_account.Credentials.from_service_account_file(
         SERVICE_ACCOUNT_FILE, scopes=SCOPES)
 
@@ -260,20 +258,15 @@ def get_responses(week):
     return responses_arr
 
 
-def upload_file_to_folder(file_path, file_name, week, type='post', file_mime_type='application/html', folder_id='1Nyqd7TeL8OgHtmKDc3kaQKjBgWDT9L2J',):
-    SCOPES = ["https://www.googleapis.com/auth/drive"]
-    SERVICE_ACCOUNT_FILE = '../google-api/account.json'
-
+def upload_file_to_folder(file_path: str, file_name: str, week: int, type='post', file_mime_type='application/html') -> None:
     credentials = service_account.Credentials.from_service_account_file(
         SERVICE_ACCOUNT_FILE, scopes=SCOPES)
     drive_service = build('drive', 'v3', credentials=credentials)
-
     file_metadata = {
         'name': file_name,
-        'parents': [folder_id]
+        'parents': [FOLDER_ID]
     }
     media = MediaFileUpload(file_path, mimetype=file_mime_type)
-
     file = drive_service.files().create(
         body=file_metadata, media_body=media, fields='id').execute()
     with open(f'../week{week}/week{week}{type}doc_id.txt', 'w') as f:

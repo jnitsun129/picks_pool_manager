@@ -9,7 +9,7 @@ from email import encoders
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
-from googleapiclient.discovery import build
+from googleapiclient.discovery import build, Resource
 from googleapiclient.errors import HttpError
 from google.oauth2 import service_account
 from googleapiclient.http import MediaIoBaseDownload
@@ -21,7 +21,7 @@ TOKEN_FILE = '../google-api/token.json'
 SERVICE_ACCOUNT_FILE = '../google-api/account.json'
 
 
-def create_message_with_attachment(sender, to, subject, message_text, file):
+def create_message_with_attachment(sender: str, to: list, subject: str, message_text: str, file: dict) -> dict:
     message = MIMEMultipart()
     message['to'] = ', '.join(to)
     message['from'] = sender
@@ -34,7 +34,6 @@ def create_message_with_attachment(sender, to, subject, message_text, file):
         content_type = 'application/octet-stream'
     main_type, sub_type = content_type.split('/', 1)
     msg = MIMEBase(main_type, sub_type)
-
     msg.set_payload(file['data'].getvalue())
     encoders.encode_base64(msg)
     msg.add_header('Content-Disposition', 'attachment', filename=file['name'])
@@ -43,7 +42,7 @@ def create_message_with_attachment(sender, to, subject, message_text, file):
     return {'raw': base64.urlsafe_b64encode(message.as_bytes()).decode()}
 
 
-def send_message(service, user_id, message):
+def send_message(service: Resource, user_id: int, message: dict) -> dict:
     try:
         message = service.users().messages().send(
             userId=user_id, body=message).execute()
@@ -53,7 +52,7 @@ def send_message(service, user_id, message):
         print(f'An error occurred: {error}')
 
 
-def download_file(service, file_id):
+def download_file(service: Resource, file_id: str) -> dict:
     file = service.files().get(fileId=file_id).execute()
     file_name = file.get('name')
 
@@ -67,7 +66,7 @@ def download_file(service, file_id):
     return {'name': file_name, 'data': fh}
 
 
-def send_postweek_pre_email(week, type='post'):
+def send_postweek_pre_email(week: int, type='post') -> None:
     credentials = service_account.Credentials.from_service_account_file(
         SERVICE_ACCOUNT_FILE, scopes=SCOPES)
 
@@ -113,19 +112,17 @@ def send_postweek_pre_email(week, type='post'):
     send_message(service, "me", message)
 
 
-def create_message_link(sender, to, subject, message_text):
+def create_message_link(sender: str, to: list, subject: str, message_text: str) -> dict:
     message = MIMEMultipart()
     message['to'] = ', '.join(to)
     message['from'] = sender
     message['subject'] = subject
-
     msg = MIMEText(message_text, 'html')
     message.attach(msg)
-
     return {'raw': base64.urlsafe_b64encode(message.as_bytes()).decode()}
 
 
-def send_preweek_form(week):
+def send_preweek_form(week: int) -> None:
     creds = None
     if os.path.exists(TOKEN_FILE):
         creds = Credentials.from_authorized_user_file(TOKEN_FILE, SCOPES)
@@ -134,15 +131,15 @@ def send_preweek_form(week):
             creds.refresh(Request())
         else:
             print(
-                "No valid credentials available. Please run the authentication script first.")
+                "No valid credentials available")
             exit()
     service = build('gmail', 'v1', credentials=creds)
     with open('../utils/sender_email.txt', 'r') as file:
         for line in file:
             sender = line.strip()
     to = []
-    with open('../utils/emails.txt', 'r') as file2:
-        for line in file2:
+    with open('../utils/emails.txt', 'r') as file:
+        for line in file:
             to.append(line.rstrip())
     subject = f"Greenwood Week {week} Picks Pool Form"
     with open(f'../week{week}/form_id_{week}.json', 'r') as f:

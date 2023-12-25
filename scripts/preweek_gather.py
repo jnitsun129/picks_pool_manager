@@ -7,7 +7,7 @@ import os
 from sendemail import send_preweek_form
 
 
-def create_week_folder(week_num):
+def create_week_folder(week_num: int) -> None:
     folder_name = f'../week{week_num}'
     os.makedirs(folder_name, exist_ok=True)
     entry_filename = os.path.join(folder_name, f'week{week_num}entry.txt')
@@ -28,7 +28,7 @@ def create_week_folder(week_num):
     shutil.copy(template_filename, points_filename)
 
 
-def get_weeks_matchups(week):
+def get_weeks_matchups(week: int) -> dict:
     url = f"https://www.vegasinsider.com/nfl/nfl-odds-week-{week}-2023/"
     response = requests.get(url)
     soup = BeautifulSoup(response.text, 'html.parser')
@@ -58,7 +58,7 @@ def get_weeks_matchups(week):
     return transformed_data
 
 
-def write_entry_data(games_data, week):
+def write_entry_data(games_data: dict, week: int) -> None:
     with open(f'../week{week}/week{week}entry.txt', 'w') as file:
         for category, data in games_data.items():
             file.write(category + '\n')
@@ -66,7 +66,7 @@ def write_entry_data(games_data, week):
                 file.write(f'{game} {info}\n')
 
 
-def gather_run(week):
+def gather_run(week: int) -> None:
     create_week_folder(week)
     write_entry_data(get_weeks_matchups(week), week)
     create_form(week)

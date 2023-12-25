@@ -1,12 +1,12 @@
-import pandas as pd
 from jinja2 import Environment, FileSystemLoader
 import requests
 from createform import upload_file_to_folder
 from sendemail import send_postweek_pre_email
 from datetime import datetime, timezone
+from utilities import populate_covers, add_winners, get_lines, calculate_margins
 
 
-def get_score_results(week):
+def get_score_results(week: int) -> None:
     url = "https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard"
     response = requests.get(url)
     if response.status_code == 200:
@@ -52,99 +52,7 @@ def get_score_results(week):
             file.write(f'{game}\n')
 
 
-def calculate_margins(week):
-    game_data = {}
-    file_name = f'../week{week}/week{week}scores.txt'
-    with open(file_name, "r") as file:
-        for line in file:
-            if len(line.split(' ')) >= 5:
-                parts = line.strip().split()
-            # First 3 values represent the game
-                game_name = ' '.join(parts[:3])
-                score = parts[3]  # Score is the 4th value
-                total = int(score.split('-')[0]) + int(score.split('-')[1])
-                winner = parts[4]  # Winner is the last value
-                team_scores = score.split('-')
-                margin = abs(int(team_scores[0]) - int(team_scores[1]))
-                game_entry = {'margin': margin,
-                              'winner': winner, 'total': total}
-                game_data[game_name] = game_entry
-        return game_data
-
-
-def populate_covers(game_outcomes, game_lines):
-    result_dict = {}
-    result_dict['Favorite'] = []
-    result_dict['SpreadPush'] = []
-    result_dict['Underdog'] = []
-    result_dict['Over'] = []
-    result_dict['TotalPush'] = []
-    result_dict['Under'] = []
-    for game, result in game_outcomes.items():
-        spread = float(game_lines['Favorite']
-                       [game].split(' ')[1].split('-')[1])
-        favorite = game_lines['Favorite'][game].split(' ')[0]
-        over_under = float(game_lines['Over'][game].split(' ')[1])
-        margin = result['margin']
-        winner = result['winner']
-        total = float(result['total'])
-        if total < over_under:
-            result_dict['Under'].append(game)
-        elif total > over_under:
-            result_dict['Over'].append(game)
-        else:
-            result_dict['TotalPush'].append(game)
-        if winner == favorite:
-            if margin > spread:
-                result_dict['Favorite'].append(game)
-            if margin < spread:
-                result_dict['Underdog'].append(game)
-            if margin == spread:
-                result_dict['SpreadPush'].append(game)
-        else:
-            result_dict['Underdog'].append(game)
-    return result_dict
-
-
-def add_winners(covers, game_outcomes, week):
-    columns = ['Name', 'Favorite', 'Underdog', 'Over', 'Under']
-    df = pd.read_csv(
-        f'../week{week}/Greenwood-Picks-Pool-Week-{week}.csv', usecols=columns)
-
-    weeks_picks = df.set_index('Name').to_dict(orient='index')
-    for key, picks in weeks_picks.items():
-        for pick in picks:
-            temp_pick = picks[pick]
-            picks[pick] = {}
-            picks[pick]['pick'] = temp_pick
-            picks[pick]['hit'] = 'Pending'
-
-    for person, picks in weeks_picks.items():
-        person = person + ' '
-        for key, pick in picks.items():
-            game_pick = pick['pick']
-            if key == "Favorite" or key == "Underdog":
-                game_pick = game_pick.split('(')[0].strip()
-                if game_pick in covers[key]:
-                    pick['hit'] = 'Yes'
-                elif game_pick in covers['SpreadPush']:
-                    pick['hit'] = 'Push'
-                else:
-                    if game_pick in game_outcomes:
-                        pick['hit'] = 'No'
-            else:
-                game_pick = game_pick.split('(')[0].strip()
-                if game_pick in covers[key]:
-                    pick['hit'] = 'Yes'
-                elif game_pick in covers['TotalPush']:
-                    pick['hit'] = 'No'
-                else:
-                    if game_pick in game_outcomes:
-                        pick['hit'] = 'No'
-    return weeks_picks
-
-
-def update_week_points(weeks_picks: dict, week):
+def update_week_points(weeks_picks: dict, week: int) -> None:
     points_dict = {}
     file_name = f'../week{week}/week{week}points.txt'
     with open(file_name, 'r') as file:
@@ -153,7 +61,7 @@ def update_week_points(weeks_picks: dict, week):
             points = float(line.rstrip().split('-')[1])
             points_dict[name] = 0
     for person, picks in weeks_picks.items():
-        for type, pick in picks.items():
+        for _, pick in picks.items():
             if pick['hit'] == 'Yes':
                 points_dict[person] += 1.0
             elif pick['hit'] == 'Push':
@@ -163,31 +71,7 @@ def update_week_points(weeks_picks: dict, week):
             file.write(person + f' -{points}\n')
 
 
-def get_lines(week):
-    game_dict = {}
-    with open(f'../week{week}/week{week}entry.txt', 'r') as file:
-        curr_key = ""
-        for line in file:
-            if line.rstrip() == 'Favorite':
-                curr_key = 'Favorite'
-                game_dict[curr_key] = {}
-            elif line.rstrip() == 'Underdog':
-                curr_key = 'Underdog'
-                game_dict[curr_key] = {}
-            elif line.rstrip() == 'Over':
-                curr_key = 'Over'
-                game_dict[curr_key] = {}
-            elif line.rstrip() == 'Under':
-                curr_key = 'Under'
-                game_dict[curr_key] = {}
-            else:
-                matchup = line.split('(')[0].rstrip()
-                spread = line.split('(')[1].rstrip()[:-1]
-                game_dict[curr_key][matchup] = spread
-    return game_dict
-
-
-def get_week_records(week):
+def get_week_records(week: int) -> dict:
     players = {}
     w = week
     with open('../utils/blank-points-template.txt', 'r') as file:
@@ -290,7 +174,7 @@ def get_week_records(week):
     return players
 
 
-def populate_template(week_results: dict, week_records, week):
+def populate_template(week_results: dict, week_records: dict, week: int) -> None:
     points_dict = {}
     file_name = f'../week{week}/week{week}points.txt'
     with open(file_name, 'r') as file:
@@ -321,7 +205,7 @@ def populate_template(week_results: dict, week_records, week):
         file.write(rendered_template)
 
 
-def curr_week_run(week):
+def curr_week_run(week: int) -> None:
     game_outcomes = calculate_margins(week)
     game_lines = get_lines(week)
     covers = populate_covers(game_outcomes, game_lines)
@@ -330,7 +214,7 @@ def curr_week_run(week):
     populate_template(weeks_picks, get_week_records(week), week)
 
 
-def get_total_picks(week):
+def get_total_picks(week: int) -> dict:
     players = {}
     with open('../utils/blank-points-template.txt', 'r') as file:
         for line in file:
@@ -440,11 +324,11 @@ def get_total_picks(week):
     return players
 
 
-def get_value(record):
+def get_value(record: str) -> float:
     return float(record.split('(')[-1].rstrip(')'))
 
 
-def populate_stats_template(week_results, week):
+def populate_stats_template(week_results: dict, week: int) -> None:
     data = {
         'Favorites': [],
         'Overs': [],
@@ -498,7 +382,7 @@ def populate_stats_template(week_results, week):
         file.write(rendered_template)
 
 
-def extract_content(html, tag):
+def extract_content(html: str, tag: str) -> str:
     start_tag = f"<{tag}>"
     end_tag = f"</{tag}>"
     start = html.find(start_tag) + len(start_tag)
@@ -506,7 +390,7 @@ def extract_content(html, tag):
     return html[start:end].strip()
 
 
-def combine_files(week):
+def combine_files(week: int) -> None:
     with open(f'../week{week}/post_scoreboard_week_{week}.html', 'r') as file:
         first_html = file.read()
         first_html_body = extract_content(first_html, 'body')
@@ -533,7 +417,7 @@ def combine_files(week):
         file.write(filled_template)
 
 
-def update_all_points(week):
+def update_all_points(week: int) -> None:
     names_arr = []
     with open("../utils/blank-points-template.txt", "r") as file:
         for line in file:
@@ -558,7 +442,7 @@ def update_all_points(week):
             file.write(f'{name} -{points}\n')
 
 
-def postweek_run(week):
+def postweek_run(week: int) -> None:
     get_score_results(week)
     curr_week_run(week)
     populate_stats_template(get_total_picks(week), week)
