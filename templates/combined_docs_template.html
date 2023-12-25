@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Greenwood Week {{week}} Results & Stats</title>
+        <style>
+            /* {{combined_css}} */
+
+            .tab-content1 {
+                margin-top: 75x;
+                margin-bottom: 1000px;
+            }
+            .tab-content2 {
+                margin-top: 75x;
+                margin-bottom: 200px;
+            }
+            .tab-content3 {
+                margin-top: -200x;
+                margin-left: 75px;
+                justify-content: center;
+                position: absolute;
+            }
+            .tabs {
+                font-size: 10px;
+            }
+            .button-style {
+                position: absolute;
+                margin-left: 40px;
+                margin-top: -1000px;
+                display: inline-block;
+                padding: 10px 20px;
+                background-color: #007bff;
+                color: white;
+                text-align: center;
+                text-decoration: none;
+                border-radius: 10px;
+                border: 1px solid transparent;
+                font-size: 16px;
+                transition: background-color 0.3s, color 0.3s;
+            }
+            .button-style1 {
+                position: absolute;
+                margin-left: 40px;
+                margin-top: -200px;
+                display: inline-block;
+                padding: 10px 20px;
+                background-color: #007bff;
+                color: white;
+                text-align: center;
+                text-decoration: none;
+                border-radius: 10px;
+                border: 1px solid transparent;
+                font-size: 16px;
+                transition: background-color 0.3s, color 0.3s;
+            }
+            .button-style:hover,
+            .button-style:focus {
+                background-color: #0056b3;
+                color: #fff;
+                text-decoration: none;
+                border-color: #0056b3;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="page1" class="tab-content1">{{first_html_body}}</div>
+        <div class="tabs">
+            <a href="#page2" class="button-style">Running Stats</a>
+        </div>
+        <div id="page2" class="tab-content2">{{second_html_body}}</div>
+        <div class="tabs">
+            <a href="#page1" class="button-style1">Back To Results</a>
+        </div>
+    </body>
+</html>

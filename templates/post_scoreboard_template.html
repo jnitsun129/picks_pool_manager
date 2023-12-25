@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Greenwood Week {{week}} Picks</title>
+        <style>
+            .body2 {
+                font-family: Arial, sans-serif;
+                background-image: url("nfl.jpg"); /* Add a background image */
+                background-size: cover;
+                background-repeat: no-repeat;
+                padding: 20px;
+                color: #333;
+            }
+            .body2 h1 {
+                text-align: center;
+                font-size: 28px;
+                color: #000000; /* Change the title color to white */
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add a text shadow */
+            }
+            .body2 h2 {
+                text-align: center;
+                font-size: 14px;
+                color: #000000; /* Change the title color to white */
+            }
+            .body2 table {
+                width: 97.5%;
+                margin: 0 auto;
+                border-collapse: collapse;
+                background-color: rgba(255, 255, 255, 0.8);
+                border-radius: 10px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+            th,
+            .body2 td {
+                padding: 12px 15px;
+                text-align: center;
+            }
+            .body2 th {
+                background-color: #333;
+                color: #fff;
+            }
+            .body2 tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+            .body2 tr:hover {
+                background-color: #ddd;
+            }
+            .body2 td.score {
+                font-weight: bold;
+                color: #333; /* Change the score color to dark gray */
+            }
+            /* Add hover effect for table rows */
+            .body2 tr:hover {
+                background-color: #a5d8e1;
+                color: #333;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="body2">
+            <h1>Results</h1>
+            <table>
+                <tr>
+                    <th>Name</th>
+                    <th>Record</th>
+                    <th>Favorite</th>
+                    <th>Underdog</th>
+                    <th>Over</th>
+                    <th>Under</th>
+                </tr>
+                {% for item in data %}
+                <tr>
+                    <td>{{ item.name }}</td>
+                    <td class="score">{{ item.record }}</td>
+                    <td
+                        style="color: {% if item.Favorite.hit == 'Yes' %}green{% elif item.Favorite.hit == 'No' %}red{% elif item.Favorite.hit == 'Push' %}orange{% else %}black{% endif %};">
+                        {{ item.Favorite.pick }}
+                    </td>
+                    <td
+                        style="color: {% if item.Underdog.hit == 'Yes' %}green{% elif item.Underdog.hit == 'No' %}red{% elif item.Underdog.hit == 'Push' %}orange{% else %}black{% endif %};">
+                        {{ item.Underdog.pick }}
+                    </td>
+                    <td
+                        style="color: {% if item.Over.hit == 'Yes' %}green{% elif item.Over.hit == 'No' %}red{% elif item.Over.hit == 'Push' %}orange{% else %}black{% endif %};">
+                        {{ item.Over.pick }}
+                    </td>
+                    <td
+                        style="color: {% if item.Under.hit == 'Yes' %}green{% elif item.Under.hit == 'No' %}red{% elif item.Under.hit == 'Push' %}orange{% else %}black{% endif %};">
+                        {{ item.Under.pick }}
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </body>
+</html>

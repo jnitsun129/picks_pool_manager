@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Greenwood Week 15 Results & Stats</title>
+        <style>
+            .body2 {
+                font-family: Arial, sans-serif;
+                background-image: url("nfl.jpg"); /* Add a background image */
+                background-size: cover;
+                background-repeat: no-repeat;
+                padding: 20px;
+                color: #333;
+            }
+            .body2 h1 {
+                text-align: center;
+                font-size: 28px;
+                color: #000000; /* Change the title color to white */
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add a text shadow */
+            }
+            .body2 h2 {
+                text-align: center;
+                font-size: 14px;
+                color: #000000; /* Change the title color to white */
+            }
+            .body2 table {
+                width: 97.5%;
+                margin: 0 auto;
+                border-collapse: collapse;
+                background-color: rgba(255, 255, 255, 0.8);
+                border-radius: 10px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+            th,
+            .body2 td {
+                padding: 12px 15px;
+                text-align: center;
+            }
+            .body2 th {
+                background-color: #333;
+                color: #fff;
+            }
+            .body2 tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+            .body2 tr:hover {
+                background-color: #ddd;
+            }
+            .body2 td.score {
+                font-weight: bold;
+                color: #333; /* Change the score color to dark gray */
+            }
+            /* Add hover effect for table rows */
+            .body2 tr:hover {
+                background-color: #a5d8e1;
+                color: #333;
+            }
+			.body1 {
+                font-family: Arial, sans-serif;
+                background-image: url("nfl.jpg");
+                background-size: cover;
+                background-repeat: no-repeat;
+                padding: 20px;
+                color: #333;
+            }
+            .body1 h1 {
+                text-align: center;
+                font-size: 28px;
+                color: #000000;
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            }
+            .body1 table {
+                width: 97.5%;
+                margin: 0 auto;
+                border-collapse: collapse;
+                background-color: rgba(255, 255, 255, 0.8);
+                border-radius: 10px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+            .body1 th {
+                background-color: #333;
+                color: #fff;
+            }
+            .body1 h2 {
+                text-align: center;
+            }
+            .body1 td {
+                padding: 12px 15px;
+                text-align: center;
+            }
+            .body1 tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+            .body1 tr:hover {
+                background-color: #ddd;
+            }
+            .body1 td.score {
+                font-weight: bold;
+                color: #333;
+            }
+            .body1 tr:hover {
+                background-color: #a5d8e1;
+                color: #333;
+            }
+
+            .tab-content1 {
+                margin-top: 75x;
+                margin-bottom: 1000px;
+            }
+            .tab-content2 {
+                margin-top: 75x;
+                margin-bottom: 200px;
+            }
+            .tab-content3 {
+                margin-top: -200x;
+                margin-left: 75px;
+                justify-content: center;
+                position: absolute;
+            }
+            .tabs {
+                font-size: 10px;
+            }
+            .button-style {
+                position: absolute;
+                margin-left: 40px;
+                margin-top: -1000px;
+                display: inline-block;
+                padding: 10px 20px;
+                background-color: #007bff;
+                color: white;
+                text-align: center;
+                text-decoration: none;
+                border-radius: 10px;
+                border: 1px solid transparent;
+                font-size: 16px;
+                transition: background-color 0.3s, color 0.3s;
+            }
+            .button-style1 {
+                position: absolute;
+                margin-left: 40px;
+                margin-top: -200px;
+                display: inline-block;
+                padding: 10px 20px;
+                background-color: #007bff;
+                color: white;
+                text-align: center;
+                text-decoration: none;
+                border-radius: 10px;
+                border: 1px solid transparent;
+                font-size: 16px;
+                transition: background-color 0.3s, color 0.3s;
+            }
+            .button-style:hover,
+            .button-style:focus {
+                background-color: #0056b3;
+                color: #fff;
+                text-decoration: none;
+                border-color: #0056b3;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="page1" class="tab-content1"><div class="body2">
+            <h1>Results</h1>
+            <table>
+                <tr>
+                    <th>Name</th>
+                    <th>Record</th>
+                    <th>Favorite</th>
+                    <th>Underdog</th>
+                    <th>Over</th>
+                    <th>Under</th>
+                </tr>
+                
+                <tr>
+                    <td>Zach B.</td>
+                    <td class="score">2-1-1</td>
+                    <td
+                        style="color: green;">
+                        Bengals -2.5
+                    </td>
+                    <td
+                        style="color: orange;">
+                        Bears +3.0
+                    </td>
+                    <td
+                        style="color: red;">
+                        Jets @ Dolphins (O 37.5)
+                    </td>
+                    <td
+                        style="color: green;">
+                        Giants @ Saints (U 39.5)
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>Jack M.</td>
+                    <td class="score">2-1-1</td>
+                    <td
+                        style="color: green;">
+                        Bills -1.5
+                    </td>
+                    <td
+                        style="color: orange;">
+                        Bears +3.0
+                    </td>
+                    <td
+                        style="color: red;">
+                        Ravens @ Jaguars (O 42.5)
+                    </td>
+                    <td
+                        style="color: green;">
+                        Giants @ Saints (U 39.5)
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>Josh R.</td>
+                    <td class="score">2-2-0</td>
+                    <td
+                        style="color: green;">
+                        Bengals -2.5
+                    </td>
+                    <td
+                        style="color: green;">
+                        Texans +2.5
+                    </td>
+                    <td
+                        style="color: red;">
+                        Ravens @ Jaguars (O 42.5)
+                    </td>
+                    <td
+                        style="color: red;">
+                        Buccaneers @ Packers (U 41.5)
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>Justin F.</td>
+                    <td class="score">2-2-0</td>
+                    <td
+                        style="color: red;">
+                        Falcons -3.0
+                    </td>
+                    <td
+                        style="color: green;">
+                        Buccaneers +3.5
+                    </td>
+                    <td
+                        style="color: red;">
+                        Bears @ Browns (O 38.0)
+                    </td>
+                    <td
+                        style="color: green;">
+                        Texans @ Titans (U 37.5)
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>Bryan M.</td>
+                    <td class="score">2-2-0</td>
+                    <td
+                        style="color: green;">
+                        Bengals -2.5
+                    </td>
+                    <td
+                        style="color: green;">
+                        Seahawks +3.5
+                    </td>
+                    <td
+                        style="color: red;">
+                        Commanders @ Rams (O 50.5)
+                    </td>
+                    <td
+                        style="color: red;">
+                        Chiefs @ Patriots (U 37.0)
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>Matthew G.</td>
+                    <td class="score">2-2-0</td>
+                    <td
+                        style="color: green;">
+                        Saints -6.0
+                    </td>
+                    <td
+                        style="color: red;">
+                        Jaguars +3.5
+                    </td>
+                    <td
+                        style="color: red;">
+                        Commanders @ Rams (O 50.5)
+                    </td>
+                    <td
+                        style="color: green;">
+                        Jets @ Dolphins (U 37.5)
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>Jack C.</td>
+                    <td class="score">1-2-1</td>
+                    <td
+                        style="color: orange;">
+                        Browns -3.0
+                    </td>
+                    <td
+                        style="color: red;">
+                        Giants +6.0
+                    </td>
+                    <td
+                        style="color: red;">
+                        Commanders @ Rams (O 50.5)
+                    </td>
+                    <td
+                        style="color: green;">
+                        Texans @ Titans (U 37.5)
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>Ari S.</td>
+                    <td class="score">1-3-0</td>
+                    <td
+                        style="color: green;">
+                        Bills -1.5
+                    </td>
+                    <td
+                        style="color: red;">
+                        Jets +8.5
+                    </td>
+                    <td
+                        style="color: red;">
+                        Commanders @ Rams (O 50.5)
+                    </td>
+                    <td
+                        style="color: red;">
+                        Chiefs @ Patriots (U 37.0)
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>Neil S.</td>
+                    <td class="score">0-3-1</td>
+                    <td
+                        style="color: orange;">
+                        Browns -3.0
+                    </td>
+                    <td
+                        style="color: red;">
+                        Jaguars +3.5
+                    </td>
+                    <td
+                        style="color: red;">
+                        Cowboys @ Bills (O 50.5)
+                    </td>
+                    <td
+                        style="color: red;">
+                        Chargers @ Raiders (U 34.5)
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>Jacob N.</td>
+                    <td class="score">0-4-0</td>
+                    <td
+                        style="color: red;">
+                        Eagles -3.5
+                    </td>
+                    <td
+                        style="color: red;">
+                        Steelers +1.5
+                    </td>
+                    <td
+                        style="color: red;">
+                        Cowboys @ Bills (O 50.5)
+                    </td>
+                    <td
+                        style="color: red;">
+                        Chiefs @ Patriots (U 37.0)
+                    </td>
+                </tr>
+                
+            </table>
+        </div></div>
+        <div class="tabs">
+            <a href="#page2" class="button-style">Running Stats</a>
+        </div>
+        <div id="page2" class="tab-content2"><div class="body1">
+            <h1>Stats</h1>
+            <h2>Overall Record</h2>
+            <table>
+                <tr>
+                    <th>Name</th>
+                    <th>Record</th>
+                </tr>
+                
+                <tr>
+                    <td>Jack C.</td>
+                    <td>38-20-2 (39.0)</td>
+                </tr>
+                
+                <tr>
+                    <td>Neil S.</td>
+                    <td>34-24-2 (35.0)</td>
+                </tr>
+                
+                <tr>
+                    <td>Jack M.</td>
+                    <td>31-25-4 (33.0)</td>
+                </tr>
+                
+                <tr>
+                    <td>Zach B.</td>
+                    <td>32-26-2 (33.0)</td>
+                </tr>
+                
+                <tr>
+                    <td>Bryan M.</td>
+                    <td>31-27-2 (32.0)</td>
+                </tr>
+                
+                <tr>
+                    <td>Justin F.</td>
+                    <td>31-27-2 (32.0)</td>
+                </tr>
+                
+                <tr>
+                    <td>Matthew G.</td>
+                    <td>30-27-3 (31.5)</td>
+                </tr>
+                
+                <tr>
+                    <td>Josh R.</td>
+                    <td>29-29-2 (30.0)</td>
+                </tr>
+                
+                <tr>
+                    <td>Ari S.</td>
+                    <td>29-30-1 (29.5)</td>
+                </tr>
+                
+                <tr>
+                    <td>Jacob N.</td>
+                    <td>25-34-1 (25.5)</td>
+                </tr>
+                
+            </table>
+            <!-- Favorites -->
+            <h2>Favorites Record</h2>
+            <table>
+                <tr>
+                    <th>Name</th>
+                    <th>Record</th>
+                </tr>
+                
+                <tr>
+                    <td>Jack C.</td>
+                    <td>10-3-2</td>
+                </tr>
+                
+                <tr>
+                    <td>Zach B.</td>
+                    <td>10-5-0</td>
+                </tr>
+                
+                <tr>
+                    <td>Justin F.</td>
+                    <td>9-5-1</td>
+                </tr>
+                
+                <tr>
+                    <td>Jack M.</td>
+                    <td>7-7-1</td>
+                </tr>
+                
+                <tr>
+                    <td>Neil S.</td>
+                    <td>6-7-2</td>
+                </tr>
+                
+                <tr>
+                    <td>Matthew G.</td>
+                    <td>5-7-3</td>
+                </tr>
+                
+                <tr>
+                    <td>Bryan M.</td>
+                    <td>5-8-2</td>
+                </tr>
+                
+                <tr>
+                    <td>Josh R.</td>
+                    <td>5-8-2</td>
+                </tr>
+                
+                <tr>
+                    <td>Jacob N.</td>
+                    <td>6-9-0</td>
+                </tr>
+                
+                <tr>
+                    <td>Ari S.</td>
+                    <td>5-9-1</td>
+                </tr>
+                
+            </table>
+
+            <!-- Overs -->
+            <h2>Underdogs Record</h2>
+            <table>
+                <tr>
+                    <th>Name</th>
+                    <th>Record</th>
+                </tr>
+                
+                <tr>
+                    <td>Jack M.</td>
+                    <td>9-3-3</td>
+                </tr>
+                
+                <tr>
+                    <td>Jack C.</td>
+                    <td>10-5-0</td>
+                </tr>
+                
+                <tr>
+                    <td>Josh R.</td>
+                    <td>10-5-0</td>
+                </tr>
+                
+                <tr>
+                    <td>Neil S.</td>
+                    <td>9-6-0</td>
+                </tr>
+                
+                <tr>
+                    <td>Justin F.</td>
+                    <td>7-7-1</td>
+                </tr>
+                
+                <tr>
+                    <td>Ari S.</td>
+                    <td>7-8-0</td>
+                </tr>
+                
+                <tr>
+                    <td>Bryan M.</td>
+                    <td>7-8-0</td>
+                </tr>
+                
+                <tr>
+                    <td>Matthew G.</td>
+                    <td>7-8-0</td>
+                </tr>
+                
+                <tr>
+                    <td>Zach B.</td>
+                    <td>5-8-2</td>
+                </tr>
+                
+                <tr>
+                    <td>Jacob N.</td>
+                    <td>5-9-1</td>
+                </tr>
+                
+            </table>
+
+            <!-- Underdogs -->
+            <h2>Overs Record</h2>
+            <table>
+                <tr>
+                    <th>Name</th>
+                    <th>Record</th>
+                </tr>
+                
+                <tr>
+                    <td>Jack C.</td>
+                    <td>9-6-0</td>
+                </tr>
+                
+                <tr>
+                    <td>Matthew G.</td>
+                    <td>9-6-0</td>
+                </tr>
+                
+                <tr>
+                    <td>Neil S.</td>
+                    <td>9-6-0</td>
+                </tr>
+                
+                <tr>
+                    <td>Bryan M.</td>
+                    <td>8-7-0</td>
+                </tr>
+                
+                <tr>
+                    <td>Jack M.</td>
+                    <td>8-7-0</td>
+                </tr>
+                
+                <tr>
+                    <td>Zach B.</td>
+                    <td>8-7-0</td>
+                </tr>
+                
+                <tr>
+                    <td>Jacob N.</td>
+                    <td>8-7-0</td>
+                </tr>
+                
+                <tr>
+                    <td>Ari S.</td>
+                    <td>7-8-0</td>
+                </tr>
+                
+                <tr>
+                    <td>Justin F.</td>
+                    <td>6-9-0</td>
+                </tr>
+                
+                <tr>
+                    <td>Josh R.</td>
+                    <td>5-10-0</td>
+                </tr>
+                
+            </table>
+
+            <!-- Unders -->
+            <h2>Unders Record</h2>
+            <table>
+                <tr>
+                    <th>Name</th>
+                    <th>Record</th>
+                </tr>
+                
+                <tr>
+                    <td>Bryan M.</td>
+                    <td>11-4-0</td>
+                </tr>
+                
+                <tr>
+                    <td>Ari S.</td>
+                    <td>10-5-0</td>
+                </tr>
+                
+                <tr>
+                    <td>Neil S.</td>
+                    <td>10-5-0</td>
+                </tr>
+                
+                <tr>
+                    <td>Jack C.</td>
+                    <td>9-6-0</td>
+                </tr>
+                
+                <tr>
+                    <td>Josh R.</td>
+                    <td>9-6-0</td>
+                </tr>
+                
+                <tr>
+                    <td>Justin F.</td>
+                    <td>9-6-0</td>
+                </tr>
+                
+                <tr>
+                    <td>Matthew G.</td>
+                    <td>9-6-0</td>
+                </tr>
+                
+                <tr>
+                    <td>Zach B.</td>
+                    <td>9-6-0</td>
+                </tr>
+                
+                <tr>
+                    <td>Jack M.</td>
+                    <td>7-8-0</td>
+                </tr>
+                
+                <tr>
+                    <td>Jacob N.</td>
+                    <td>6-9-0</td>
+                </tr>
+                
+            </table>
+            <!-- Winnings -->
+            <h2>Winnings</h2>
+            <table>
+                <tr>
+                    <th>(Assuming -110 Odds on Each Pick)</th>
+                </tr>
+                
+                <tr>
+                    <td
+                        style="color: red;">
+                        If Ari S. bet $100 on each pick, he would be down: $363.61
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td
+                        style="color: green;">
+                        If Bryan M. bet $100 on each pick, he would be up: $118.21
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td
+                        style="color: green;">
+                        If Jack C. bet $100 on each pick, he would be up: $1454.58
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td
+                        style="color: green;">
+                        If Jack M. bet $100 on each pick, he would be up: $318.21
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td
+                        style="color: red;">
+                        If Josh R. bet $100 on each pick, he would be down: $263.61
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td
+                        style="color: green;">
+                        If Justin F. bet $100 on each pick, he would be up: $118.21
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td
+                        style="color: green;">
+                        If Matthew G. bet $100 on each pick, he would be up: $27.3
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td
+                        style="color: green;">
+                        If Neil S. bet $100 on each pick, he would be up: $690.94
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td
+                        style="color: green;">
+                        If Zach B. bet $100 on each pick, he would be up: $309.12
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td
+                        style="color: red;">
+                        If Jacob N. bet $100 on each pick, he would be down: $1127.25
+                    </td>
+                </tr>
+                
+            </table>
+        </div></div>
+        <div class="tabs">
+            <a href="#page1" class="button-style1">Back To Results</a>
+        </div>
+    </body>
+</html>

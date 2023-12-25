@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Greenwood Picks Dashboard</title>
+        <style>
+            /* Basic Reset */
+            * {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+
+            /* Body Styling */
+            body {
+                font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+                background-color: #f4f7f6;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                color: #4a4a4a;
+                line-height: 1.6;
+                text-rendering: optimizeLegibility;
+            }
+
+            /* Container Styling */
+            .container {
+                background: #ffffff;
+                padding: 50px;
+                border-radius: 15px;
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+                max-width: 650px;
+                width: 90%;
+                transition: box-shadow 0.3s ease;
+            }
+
+            .container:hover {
+                box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            }
+
+            /* Heading Styling */
+            h1 {
+                font-size: 32px;
+                text-align: center;
+                margin-bottom: 40px;
+                color: #0056b3; /* Deeper Blue Shade */
+                font-weight: 700;
+            }
+
+            /* Form Styling */
+            form {
+                display: flex;
+                flex-direction: column;
+                gap: 25px;
+            }
+
+            .form-group {
+                display: flex;
+                flex-direction: column;
+            }
+
+            label {
+                font-weight: 600;
+                margin-bottom: 12px;
+                font-size: 18px;
+                color: #0056b3;
+            }
+
+            input,
+            select,
+            button {
+                padding: 18px;
+                border-radius: 8px;
+                border: 2px solid #ced4da;
+                font-size: 18px;
+                margin-top: 8px;
+                transition: all 0.3s ease;
+            }
+
+            input:focus,
+            select:focus,
+            button:focus {
+                border-color: #0056b3;
+                box-shadow: 0 0 8px rgba(0, 86, 179, 0.6);
+                outline: none;
+            }
+
+            /* Button Styling */
+            button {
+                background-color: #0056b3; /* Deeper Blue Shade */
+                color: white;
+                border: none;
+                cursor: pointer;
+                font-weight: 700;
+                letter-spacing: 1.2px;
+                transition: background-color 0.3s ease;
+            }
+
+            button:hover {
+                background-color: #004494;
+            }
+
+            @media only screen and (max-width: 600px) {
+                .container {
+                    padding: 30px;
+                }
+
+                h1 {
+                    font-size: 28px;
+                }
+
+                form {
+                    gap: 20px;
+                }
+
+                label,
+                input,
+                select,
+                button {
+                    font-size: 16px;
+                }
+
+                input,
+                select,
+                button {
+                    padding: 15px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Greenwood Picks Pool Dashboard</h1>
+
+            <form id="operationForm">
+                <div class="form-group">
+                    <label for="endpointSelect">Select Action:</label>
+                    <select id="endpointSelect" name="endpoint">
+                        <option value="preweek_gather">Send Form</option>
+                        <option value="preweek_create">Send Scoreboard</option>
+                        <option value="postweek">Send Results</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="weekNumber">Week Number:</label>
+                    <input
+                        type="number"
+                        id="weekNumber"
+                        name="week_number"
+                        required />
+                </div>
+
+                <button type="submit">Run</button>
+            </form>
+        </div>
+
+        <script>
+            document.getElementById("operationForm").onsubmit = function (e) {
+                e.preventDefault();
+                var endpoint = document.getElementById("endpointSelect").value;
+                var weekNumber = document.getElementById("weekNumber").value;
+                var actionUrl =
+                    "http://{{ host_with_port }}" +
+                    "/" +
+                    endpoint +
+                    "/" +
+                    weekNumber;
+                window.open(actionUrl, "_blank");
+            };
+        </script>
+    </body>
+</html>
